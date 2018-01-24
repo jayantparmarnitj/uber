@@ -10,7 +10,7 @@ try{
   const accountSid = 'AC5cce3ad6245f9d26361fc1430275274a';
   const authToken = 'd569dcea18aa69d7ed19d2dfa35fc6dc';
   const client = require('twilio')(accountSid, authToken);
-  const mobile = req.body.data.cardNum;
+  const mobile = req.body.cardNum;
 
   client.messages.create(
     {
