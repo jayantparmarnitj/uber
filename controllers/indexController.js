@@ -32,7 +32,7 @@ exports.verify_otp = function(req, res) {
     //   }
     // );
   
-  }
+  
   catch(e){
     return res.status(500).json({success:0,msg:e.message});
   }
