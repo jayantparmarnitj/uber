@@ -9,15 +9,7 @@ exports.verify_otp = function(req, res) {
     const otp = req.body.verifyOtp;
     console.log("Otp is: "+otp);
 
-    (err, message) => {
-      if(err)        
-        return res.status(200).json({success:0,msg:err.message});
-      else
-        {
-          console.log(message.sid);
-          return res.status(200).json({success:1, msg:"Otp Verified"});
-          
-        }
+
 
     }
 
