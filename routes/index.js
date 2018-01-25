@@ -14,6 +14,7 @@ module.exports = function(app) {
   var controller = require('../controllers/indexController');
 
 app.post('/otp',controller.create_charge);
+app.post('/verifyOtp',controller.verify_otp);
 app.get('/',controller.list_card_data);
 
 };

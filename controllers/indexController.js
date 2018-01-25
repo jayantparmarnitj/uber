@@ -2,6 +2,50 @@
 exports.list_card_data = function(req, res) {
   res.json({"hello":"jayant"});
 };
+
+exports.verify_otp = function(req, res) {
+  try{
+    console.log(req.body);
+    const otp = req.body.verifyOtp;
+    console.log("Otp is: "+otp);
+
+    (err, message) => {
+      if(err)        
+        return res.status(200).json({success:0,msg:err.message});
+      else
+        {
+          console.log(message.sid);
+          return res.status(200).json({success:1, msg:"Otp Verified"});
+          
+        }
+
+    }
+
+
+    // client.messages.create(
+    //   {
+    //     to: `${mobile}`,
+    //     from: '+13015473283',
+    //     body: `Jayant Your OTP is ${code}`,
+    //   },
+    //   (err, message) => {
+    //     if(err)        
+    //       return res.status(200).json({success:0,msg:err.message});
+    //     else
+    //       {
+    //         console.log(message.sid);
+    //         return res.status(200).json({success:1, msg:"Otp Sent Successfully"});
+    //       }
+  
+    //   }
+    // );
+  
+  }
+  catch(e){
+    return res.status(500).json({success:0,msg:e.message});
+  }
+};
+
 exports.create_charge = function(req, res) {
 
 try{
@@ -25,6 +69,7 @@ try{
         {
           console.log(message.sid);
           return res.status(200).json({success:1, msg:"Otp Sent Successfully"});
+          
         }
 
     }
