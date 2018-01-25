@@ -8,7 +8,7 @@ exports.verify_otp = function(req, res) {
     console.log(req.body);
     const otp = req.body.verifyOtp;
     console.log("Otp is: "+otp);
-
+    return res.status(200).json({success:1, msg:"Otp Verified Successfully"});
 
 
     }
