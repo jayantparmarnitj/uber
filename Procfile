@@ -1,1 +1,1 @@
-web:  DEBUG=jayant:* npm start
+web:  DEBUG=Uber:* npm start

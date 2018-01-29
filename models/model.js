@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
-    mobileNum:  String,
-    Otp:  String
+    driverName:  String,
+              gps:  String
 });
 
-module.exports = mongoose.model('TwilioOtp', schema);
+module.exports = mongoose.model('driver_gps', schema);

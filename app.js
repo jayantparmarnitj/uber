@@ -18,11 +18,11 @@ app.set('view engine', 'pug');
 
 
 mongoose.Promise = global.Promise;
-var promise = mongoose.connect('mongodb://localhost:27017/OtpVerification', {
+var promise = mongoose.connect('mongodb://jayant:123@ds119018.mlab.com:19018/uberdatabase', {
   useMongoClient: true,
 });
 promise.then(function(db) {
-    console.log("Connected to OtpVerification database!!!");
+    console.log("Connected to uberdatabase database!!!");
 }, function(err){
     console.log("Error in connecting database " + err);
 });
