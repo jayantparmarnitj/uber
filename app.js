@@ -43,8 +43,10 @@ require('./routes/index')(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
+  // var err = new Error('Not Found');
+  // err.status = 404;
+  return res.status(404).json({success:0,msg:'404 Page Not Found'});
+
   next(err);
 });
 app.use(cors());
