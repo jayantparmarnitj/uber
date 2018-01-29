@@ -8,7 +8,7 @@ exports.list_card_data = function(req, res) {
 
 exports.find_driver = function(req, res) {
   try{
-    console.log(req.body);
+    console.log("longitude "+req.body.data.longitude);
     const longitude = req.body.data.longitude;
     const latitude = req.body.data.latitude;
     console.log("longitude: "+longitude);
