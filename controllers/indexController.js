@@ -8,11 +8,11 @@ exports.list_card_data = function(req, res) {
 
 exports.find_driver = function(req, res) {
   try{
-    console.log("longitude "+req.body.data.longitude);
+    console.log(" req body"+req.body);
     const longitude = req.body.data.longitude;
     const latitude = req.body.data.latitude;
-    console.log("longitude: "+longitude);
-    console.log("latitude: "+latitude);
+    // console.log("longitude: "+longitude);
+    // console.log("latitude: "+latitude);
     
     Task.find({},function (err, data) {
 
