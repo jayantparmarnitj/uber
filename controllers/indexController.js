@@ -14,7 +14,7 @@ exports.find_driver = function(req, res) {
     console.log("longitude: "+longitude);
     console.log("latitude: "+latitude);
     
-    Task.findOne({"gps":longitude},function (err, data) {
+    Task.findOne({"longitude":longitude},function (err, data) {
 
       if (err) 
         return console.log(err);
@@ -23,6 +23,8 @@ exports.find_driver = function(req, res) {
           console.log("database data:"+data);
           return res.status(200).json({success:1, msg:"Success"});
       }
+      else
+      return res.status(200).json({success:1, msg:"Success"});
       
     });
 
