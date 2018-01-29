@@ -14,7 +14,7 @@ exports.find_driver = function(req, res) {
     console.log("longitude: "+longitude);
     console.log("latitude: "+latitude);
     
-    Task.findOne({"longitude":longitude},function (err, data) {
+    Task.find({},function (err, data) {
 
       if (err) 
         return console.log(err);
