@@ -13,20 +13,23 @@ exports.find_driver = function(req, res) {
     console.log(" req body"+JSON.stringify(req.body.latitude));
     const longitude = req.body.longitude;
     const latitude = req.body.latitude;
-    // console.log("longitude: "+longitude);
-    // console.log("latitude: "+latitude);
+    console.log("longitude: "+longitude);
+    console.log("latitude: "+latitude);
     
-    Task.find({},function (err, data) {
+    Task.findOne({"driverName":"Ram"},function (err, data) {
 
       if (err) 
         return console.log(err);
       else if (data)
       {
           console.log("database data:"+data);
-          return res.status(200).json({success:1, msg:"Success"});
+          const dbLongitude=data.longitude;
+          const dbLatitude=data.latitude;
+          const name = data.driverName;
+          return res.status(200).json({success:1, msg:`Success: nearest driver: ${name}, Longitude: ${dbLongitude} and Latitude: ${dbLatitude}`});
       }
       else
-      return res.status(200).json({success:1, msg:"Success"});
+      return res.status(200).json({success:1, msg:"Service available only in chandigarh"});
       
     });
 
