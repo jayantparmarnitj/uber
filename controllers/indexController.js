@@ -26,7 +26,8 @@ exports.find_driver = function(req, res) {
           const dbLongitude=data.longitude;
           const dbLatitude=data.latitude;
           const name = data.driverName;
-          return res.status(200).json({success:1, msg:`Success: nearest driver: ${name}, Longitude: ${dbLongitude} and Latitude: ${dbLatitude}`});
+          //return res.status(200).json({success:1, msg:`Success: nearest driver: ${name}, Longitude: ${dbLongitude} and Latitude: ${dbLatitude}`});
+          return res.status(200).json({"driverName":name,"longitude":dbLongitude,"latitude":dbLatitude});
       }
       else
       return res.status(200).json({success:1, msg:"Service available only in chandigarh"});
