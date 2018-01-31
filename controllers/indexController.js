@@ -1,5 +1,7 @@
 'use strict';
 var mysql      = require('mysql');
+var dname,long,lat;
+//const Resbody={};
 // var mongoose = require('mongoose'),
 //   Task = mongoose.model('driver_gps');
 exports.list_card_data = function(req, res) {
@@ -8,13 +10,14 @@ exports.list_card_data = function(req, res) {
 
 exports.find_driver = function(req, res) {
   try{
+    var arr = [];
     const driverName = JSON.stringify(req.body.driverName);
     const Flongitude = JSON.stringify(req.body.longitude);
     const Flatitude = JSON.stringify(req.body.latitude);
-    console.log("longitude: "+Flongitude);
-    console.log("latitude: "+Flatitude);
+    console.log("Flongitude: "+Flongitude);
+    console.log("Flatitude: "+Flatitude);
 
-    // var connection = mysql.createConnection({
+    // var con = mysql.createConnection({
     //   host     : 'us-cdbr-east-04.cleardb.com',
     //   user     : 'b37b1bb4aa4cc9',
     //   password : '2a1767d4',
@@ -30,38 +33,43 @@ exports.find_driver = function(req, res) {
     con.connect(function(err) {
       if (err) throw err;
       console.log("Connected!");
-      var arr = [];
+
       var min = 100000000;
-      var dname,long,lat;
-      //var sql = "CREATE TABLE driver (driverName VARCHAR(255), longitude VARCHAR(255), latitude VARCHAR(255))";
-     //var sql= "INSERT INTO driver_gps (driverName, longitude, latitude) VALUES ("+driverName+", "+Flongitude+", "+Flatitude+")";
      var sql = "select * from driver_gps"
       con.query(sql, function (err, result) {
         if (err) throw err;
         if(result.length){
-          for(var i = 0; i<result.length; i++ ){     
+          for(var i = 0; i<result.length; i++ ){
                 if(Math.sqrt(Math.pow((Flongitude-result[i].longitude), 2) + Math.pow((Flatitude-result[i].latitude), 2))<= min)
                 {
-                  min=Math.sqrt(Math.pow((Flongitude-longitude), 2) + Math.pow((Flatitude-latitude), 2));
+                  min=Math.sqrt(Math.pow((Flongitude-result[i].longitude), 2) + Math.pow((Flatitude-result[i].latitude), 2));
                   dname=result[i].driverName;
-                  long=rerult[i].longitude;
+                  long=result[i].longitude;
                   lat=result[i].latitude;
+                  //  Resbody = {
+                  //   "driverName":dname,
+                  //   "longitude":long,
+                  //   "latitude":lat
+                  // }
                 }
-                          arr.push(result[i]);
               }
+              console.log("name database data",dname);
+              const Resbody = {
+                "driverName":dname,
+                "longitude":long,
+                "latitude":lat
+              }
+              console.log("Resbody"+ {Resbody});
+            return res.send({Resbody});
            }
-        console.log("name database data",arr);
-        if(esult.length-1==i)
-        return res.send([result[0],result[1]]);
+        
+        
       });
       
     });
- 
-// const Resbody={
-//   "data":arr
-// }
-   // return res.send({Resbody});
-    //return res.status(200).json({success:1, msg:`success ${arr}`});
+
+
+
 
     // Task.findOne("Math.sqrt(Math.pow((Flongitude-longitude), 2) + Math.pow((Flatitude-latitude), 2))>="+ min +": min=Math.sqrt( Math.pow((Flongitude-longitude), 2) + Math.pow((Flatitude-latitude), 2)) ? "+min+"",function (err, data) {
 
