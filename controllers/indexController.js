@@ -51,6 +51,7 @@ exports.find_driver = function(req, res) {
               }
            }
         console.log("name database data",arr);
+        if(esult.length-1==i)
         return res.send([result[0],result[1]]);
       });
       
