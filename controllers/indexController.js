@@ -17,18 +17,18 @@ exports.find_driver = function(req, res) {
     console.log("Flongitude: "+Flongitude);
     console.log("Flatitude: "+Flatitude);
 
-    // var con = mysql.createConnection({
-    //   host     : 'us-cdbr-east-04.cleardb.com',
-    //   user     : 'b37b1bb4aa4cc9',
-    //   password : '2a1767d4',
-    //   database : 'heroku_ed303c50642e20d'
-    // });
     var con = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "",
-      database: "uberDb"
+      host     : 'us-cdbr-east-04.cleardb.com',
+      user     : 'b37b1bb4aa4cc9',
+      password : '2a1767d4',
+      database : 'heroku_ed303c50642e20d'
     });
+    // var con = mysql.createConnection({
+    //   host: "localhost",
+    //   user: "root",
+    //   password: "",
+    //   database: "uberDb"
+    // });
     
     con.connect(function(err) {
       if (err) throw err;
