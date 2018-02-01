@@ -17,15 +17,15 @@ app.set('view engine', 'pug');
 
 
 
-// mongoose.Promise = global.Promise;
-// var promise = mongoose.connect('mongodb://jayant:123@ds119018.mlab.com:19018/uberdatabase', {
-//   useMongoClient: true,
-// });
-// promise.then(function(db) {
-//     console.log("Connected to uberdatabase database!!!");
-// }, function(err){
-//     console.log("Error in connecting database " + err);
-// });
+mongoose.Promise = global.Promise;
+var promise = mongoose.connect('mongodb://jayant:123@ds119018.mlab.com:19018/uberdatabase', {
+  useMongoClient: true,
+});
+promise.then(function(db) {
+    console.log("Connected to uberdatabase database!!!");
+}, function(err){
+    console.log("Error in connecting database " + err);
+});
 
 
 // uncomment after placing your favicon in /public
