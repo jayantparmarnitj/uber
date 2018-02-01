@@ -110,7 +110,7 @@ exports.find_all_drivers = function(req, res) {
 
             var min = 100000000;
             var radius=10;
-            var sql = "select * from driver_gps"
+            var sql = "select * from uber_Drivers"
             connection.query(sql, function (err, result) 
              {
                     if (err) 
@@ -191,7 +191,7 @@ var arr=[];
 
             var min = 100000000;
             var radius=10;
-            var sql = "select * from driver_gps"
+            var sql = "select * from uber_Drivers"
             connection.query(sql, function (err, result) 
              {
                     if (err) 
