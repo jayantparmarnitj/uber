@@ -86,7 +86,6 @@ exports.find_all_drivers = function(req, res) {
         return console.log(err);
       else if (data)
       {
-      
           return res.status(200).json(data);
       }
       
@@ -142,10 +141,10 @@ var arr=[];
                   }
 
                  console.log("nearest drivers "+ arr.length);
-              //  if(arr.length==0)
-              //       res.status(200).json({success:1, msg:"Service available only in chandigarh"});
-              //    else
-                 res.status(200).json(arr);
+               if(arr.length==0)
+                   return  res.status(200).json({success:1, msg:"Service not available "});
+                 else
+                return res.status(200).json(arr);
                 }
               
             });
