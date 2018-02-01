@@ -216,7 +216,6 @@ var arr=[];
                      if(result.length){
                     for(var i = 0; i<result.length; i++ ){
                       var d = findD(Flatitude,Flongitude,result[i].latitude,result[i].longitude);
-                      // console.log("Dist "+d)
                       if(d<min)
                       {
                         arr.push(result[i]);
