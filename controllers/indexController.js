@@ -147,6 +147,22 @@ exports.find_all_drivers = function(req, res) {
 };
 
 
+function findD(lat1,lon1,lat2,lon2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(lat2-lat1);  // deg2rad below
+  var dLon = deg2rad(lon2-lon1);
+  var a =
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ;
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  var d = R * c; // Distance in km
+  return d;
+}
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
+}
 exports.find_nearest_drivers = function(req, res) {
   try{
     var dname,long,lat;
@@ -189,7 +205,7 @@ var arr=[];
 
 
 
-            var min = 100000000;
+            var min = 1;
             var radius=0.007608997108693453;
             var sql = "select * from uber_Drivers"
             connection.query(sql, function (err, result) 
@@ -197,17 +213,14 @@ var arr=[];
                     if (err) 
                          throw err;
                      if(result.length){
-                          for(var i = 0; i<result.length; i++ ){
-                       if(Math.sqrt(Math.pow((Flongitude-result[i].longitude), 2) + Math.pow((Flatitude-result[i].latitude), 2))<= min && min>radius)
-                       {
-                         min=Math.sqrt(Math.pow((Flongitude-result[i].longitude), 2) + Math.pow((Flatitude-result[i].latitude), 2));
-                         dname=result[i].driverName;
-                         long=result[i].longitude;
-                         lat=result[i].latitude;
-                         arr.push(result[i]);
-                         console.log("min "+min);
-                       }
-                     }
+                    for(var i = 0; i<result.length; i++ ){
+                      var d = findD(Flatitude,Flongitude,result[i].latitude,result[i].longitude);
+                      // console.log("Dist "+d)
+                      if(d<min)
+                      {
+                        arr.push(result[i]);
+                      }
+                    }
                      const Resbody = {
                        "driverName":dname,
                        "longitude":long,
@@ -240,46 +253,6 @@ var arr=[];
   
   handleDisconnect();
 
-    // var con = mysql.createConnection({
-    //   host     : 'us-cdbr-iron-east-05.cleardb.net',
-    //   user     : 'b37b1bb4aa4cc9',
-    //   password : '2a1767d4',
-    //   database : 'heroku_ed303c50642e20d'
-    // });
-    // con.connect(function(err) {
-    //   if (err) throw err;
-    //   console.log("Connected!");
-
-    //   var min = 100000000;
-    //  var sql = "select * from driver_gps"
-    //   con.query(sql, function (err, result) 
-    //   {
-    //          if (err) 
-    //               throw err;
-    //           if(result.length){
-    //                for(var i = 0; i<result.length; i++ ){
-    //             if(Math.sqrt(Math.pow((Flongitude-result[i].longitude), 2) + Math.pow((Flatitude-result[i].latitude), 2))<= min)
-    //             {
-    //               min=Math.sqrt(Math.pow((Flongitude-result[i].longitude), 2) + Math.pow((Flatitude-result[i].latitude), 2));
-    //               dname=result[i].driverName;
-    //               long=result[i].longitude;
-    //               lat=result[i].latitude;
-    //             }
-    //           }
-    //           const Resbody = {
-    //             "driverName":dname,
-    //             "longitude":long,
-    //             "latitude":lat
-    //           }
-    //           //console.log("Resbody"+ {Resbody});
-    //         //return res.send({Resbody});
-    //         return res.status(200).json({Resbody});
-    //        }
-        
-        
-    //   });
-      
-    // });
     }
   catch(e){
     return res.status(500).json({success:0,msg:e.message});
