@@ -190,7 +190,7 @@ var arr=[];
 
 
             var min = 100000000;
-            var radius=10;
+            var radius=0.007608997108693453;
             var sql = "select * from uber_Drivers"
             connection.query(sql, function (err, result) 
              {
@@ -205,6 +205,7 @@ var arr=[];
                          long=result[i].longitude;
                          lat=result[i].latitude;
                          arr.push(result[i]);
+                         console.log("min "+min);
                        }
                      }
                      const Resbody = {
