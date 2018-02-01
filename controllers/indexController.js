@@ -228,10 +228,12 @@ var arr=[];
                      }
                      //console.log("Resbody"+ {Resbody});
                    //return res.send({Resbody});
-                 
+                 if(arr.length)
                    return res.status(200).json(arr);
-                 
+                   else
+                   return res.status(200).json({success:1, msg:"Service available only in chandigarh"});
                   }
+                
                
                
              });
