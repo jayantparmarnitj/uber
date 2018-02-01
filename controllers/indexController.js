@@ -222,13 +222,7 @@ var arr=[];
                         arr.push(result[i]);
                       }
                     }
-                     const Resbody = {
-                       "driverName":dname,
-                       "longitude":long,
-                       "latitude":lat
-                     }
-                     //console.log("Resbody"+ {Resbody});
-                   //return res.send({Resbody});
+
                    console.log("nearest drivers "+ arr.length);
                  if(arr.length==0)
                      return res.status(200).json({success:1, msg:"Service available only in chandigarh"});
