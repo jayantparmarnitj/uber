@@ -1,78 +1,75 @@
 'use strict';
 var mysql      = require('mysql');
-// var dname,long,lat;
-// var arr=[];
-//const Resbody={};
 var mongoose = require('mongoose'),
   Task = mongoose.model('driver_gps');
 exports.list_card_data = function(req, res) {
   res.json({"hello":"jayant"});
 };
 
-exports.drivers_signup = function(req, res) {
-  try{
-    const driverName = JSON.stringify(req.body.driverName);
-    const Flongitude = JSON.stringify(req.body.longitude);
-    const Flatitude = JSON.stringify(req.body.latitude);
-    console.log("Flongitude: "+Flongitude);
-    console.log("Flatitude: "+Flatitude);
-  var db_config = {
-    host     : process.env.MYSQL_HOST,
-    user     : process.env.MYSQL_USER,
-    password : process.env.MYSQL_PASSWORD,
-    database : process.env.MYSQL_DATABASE
-};
+// exports.drivers_signup = function(req, res) {
+//   try{
+//     const driverName = JSON.stringify(req.body.driverName);
+//     const Flongitude = JSON.stringify(req.body.longitude);
+//     const Flatitude = JSON.stringify(req.body.latitude);
+//     console.log("Flongitude: "+Flongitude);
+//     console.log("Flatitude: "+Flatitude);
+//   var db_config = {
+//     host     : process.env.MYSQL_HOST,
+//     user     : process.env.MYSQL_USER,
+//     password : process.env.MYSQL_PASSWORD,
+//     database : process.env.MYSQL_DATABASE
+// };
   
-  var connection;
-  connection = mysql.createConnection(db_config); 
-  function handleDisconnect() {
-      console.log('1. connecting to db:');
+//   var connection;
+//   connection = mysql.createConnection(db_config); 
+//   function handleDisconnect() {
+//       console.log('1. connecting to db:');
      
      
   
-      connection.connect(function(err) {             
-          if (err) {                                    
-              console.log('2. error when connecting to db:', err);
-           // throw err;
-           console.log("createdgfd");
-              setTimeout(handleDisconnect, 5000); 
-          }
-          else{console.log("Ininserted");
-           // var sql = "CREATE TABLE uber_Drivers (driverName VARCHAR(255), longitude DOUBLE(40,5), latitude DOUBLE(40,5))";
-           //var sql = "INSERT INTO uberDrivers (name, address) VALUES ('Company Inc', 'Highway 37')";
-           //var sql = "select * from uber_drivers";
-           var sql = "INSERT INTO uber_Drivers (driverName, longitude, latitude) VALUES ("+driverName+","+Flongitude+","+Flatitude+")";
-            connection.query(sql, function (err, result) 
-             {
-                    if (err) 
-                         throw err;
+//       connection.connect(function(err) {             
+//           if (err) {                                    
+//               console.log('2. error when connecting to db:', err);
+//            // throw err;
+//            console.log("createdgfd");
+//               setTimeout(handleDisconnect, 5000); 
+//           }
+//           else{console.log("Ininserted");
+//            // var sql = "CREATE TABLE uber_Drivers (driverName VARCHAR(255), longitude DOUBLE(40,5), latitude DOUBLE(40,5))";
+//            //var sql = "INSERT INTO uberDrivers (name, address) VALUES ('Company Inc', 'Highway 37')";
+//            //var sql = "select * from uber_drivers";
+//            var sql = "INSERT INTO uber_Drivers (driverName, longitude, latitude) VALUES ("+driverName+","+Flongitude+","+Flatitude+")";
+//             connection.query(sql, function (err, result) 
+//              {
+//                     if (err) 
+//                          throw err;
                    
-                    console.log("inserted");
-                   return res.status(200).json(result);
+//                     console.log("inserted");
+//                    return res.status(200).json(result);
 
-             });
-          }
+//              });
+//           }
 
-      });                                   
+//       });                                   
 
-      connection.on('error', function(err) {
-          console.log('3. db error', err);
-          if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+//       connection.on('error', function(err) {
+//           console.log('3. db error', err);
+//           if (err.code === 'PROTOCOL_CONNECTION_LOST') {
            
            
-              handleDisconnect();                      	
-          } else {                                      	
-              throw err;                                  
-          }
-      });
-  }
+//               handleDisconnect();                      	
+//           } else {                                      	
+//               throw err;                                  
+//           }
+//       });
+//   }
   
-  handleDisconnect();
-    }
-  catch(e){
-    return res.status(500).json({success:0,msg:e.message});
-  }
-};
+//   handleDisconnect();
+//     }
+//   catch(e){
+//     return res.status(500).json({success:0,msg:e.message});
+//   }
+// };
 
 exports.find_all_drivers = function(req, res) {
   try{
