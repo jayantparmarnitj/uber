@@ -142,9 +142,9 @@ var arr=[];
                   }
 
                  console.log("nearest drivers "+ arr.length);
-               if(arr.length==0)
-                    res.status(200).json({success:1, msg:"Service available only in chandigarh"});
-                 else
+              //  if(arr.length==0)
+              //       res.status(200).json({success:1, msg:"Service available only in chandigarh"});
+              //    else
                  res.status(200).json(arr);
                 }
               
