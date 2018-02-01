@@ -1,6 +1,7 @@
 'use strict';
 var mysql      = require('mysql');
 var dname,long,lat,flag=0;
+var arr=[];
 //const Resbody={};
 // var mongoose = require('mongoose'),
 //   Task = mongoose.model('driver_gps');
@@ -16,13 +17,19 @@ exports.find_driver = function(req, res) {
     console.log("Flongitude: "+Flongitude);
     console.log("Flatitude: "+Flatitude);
 
+  //   var db_config = {
+  //     host     : 'us-cdbr-iron-east-05.cleardb.net',
+  //     user     : 'b37b1bb4aa4cc9',
+  //     password : '2a1767d4',
+  //     database : 'heroku_ed303c50642e20d'
+  // };
 
-    var db_config = {
-    host     : 'us-cdbr-iron-east-05.cleardb.net',
-      user     : 'b37b1bb4aa4cc9',
-      password : '2a1767d4',
-      database : 'heroku_ed303c50642e20d'
-  };
+  var db_config = {
+    host     : process.env.MYSQL_HOST,
+    user     : process.env.MYSQL_USER,
+    password : process.env.MYSQL_PASSWORD,
+    database : process.env.MYSQL_DATABASE
+};
   
   var connection;
   connection = mysql.createConnection(db_config); 
@@ -33,7 +40,7 @@ exports.find_driver = function(req, res) {
   
       connection.connect(function(err) {              
           if (err) {                                    
-             // console.log('2. error when connecting to db:', err);
+              console.log('2. error when connecting to db:', err);
            // throw err;
 
               setTimeout(handleDisconnect, 5000); 
@@ -43,6 +50,7 @@ exports.find_driver = function(req, res) {
 
 
             var min = 100000000;
+            var radius=10;
             var sql = "select * from driver_gps"
             connection.query(sql, function (err, result) 
              {
@@ -50,12 +58,13 @@ exports.find_driver = function(req, res) {
                          throw err;
                      if(result.length){
                           for(var i = 0; i<result.length; i++ ){
-                       if(Math.sqrt(Math.pow((Flongitude-result[i].longitude), 2) + Math.pow((Flatitude-result[i].latitude), 2))<= min)
+                       if(Math.sqrt(Math.pow((Flongitude-result[i].longitude), 2) + Math.pow((Flatitude-result[i].latitude), 2))<= min && min>radius)
                        {
                          min=Math.sqrt(Math.pow((Flongitude-result[i].longitude), 2) + Math.pow((Flatitude-result[i].latitude), 2));
                          dname=result[i].driverName;
                          long=result[i].longitude;
                          lat=result[i].latitude;
+                         arr.push(result[i]);
                        }
                      }
                      const Resbody = {
@@ -66,7 +75,7 @@ exports.find_driver = function(req, res) {
                      //console.log("Resbody"+ {Resbody});
                    //return res.send({Resbody});
                   //if(flag==0)
-                   return res.status(200).json({Resbody});
+                   return res.status(200).json(arr);
                  
                   }
                
