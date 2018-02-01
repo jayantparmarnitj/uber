@@ -3,8 +3,8 @@ var mysql      = require('mysql');
 // var dname,long,lat;
 // var arr=[];
 //const Resbody={};
-var mongoose = require('mongoose'),
-  Task = mongoose.model('driver_gps');
+// var mongoose = require('mongoose'),
+//   Task = mongoose.model('driver_gps');
 exports.list_card_data = function(req, res) {
   res.json({"hello":"jayant"});
 };
