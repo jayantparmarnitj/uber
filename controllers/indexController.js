@@ -87,7 +87,7 @@ exports.find_all_drivers = function(req, res) {
       else if (data)
       {
       
-          return res.status(200).json({data});
+          return res.status(200).json(data);
       }
       
     });
