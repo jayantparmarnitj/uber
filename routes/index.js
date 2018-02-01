@@ -3,7 +3,8 @@
 module.exports = function(app) {
   var controller = require('../controllers/indexController');
 
-app.all('/driverGps',controller.find_driver);
+app.all('/driverGps',controller.find_nearest_drivers);
+app.all('/allDrivers',controller.find_all_drivers);
 // app.all('/userLogin',controller.user_login);
 // app.all('/driverLogin',controller.driver_login);
 //app.post('/verifyOtp',controller.verify_otp);

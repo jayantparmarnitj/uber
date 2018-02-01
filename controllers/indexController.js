@@ -1,7 +1,7 @@
 'use strict';
 var mysql      = require('mysql');
-var dname,long,lat,flag=0;
-var arr=[];
+// var dname,long,lat,flag=0;
+// var arr=[];
 //const Resbody={};
 // var mongoose = require('mongoose'),
 //   Task = mongoose.model('driver_gps');
@@ -9,8 +9,83 @@ exports.list_card_data = function(req, res) {
   res.json({"hello":"jayant"});
 };
 
-exports.find_driver = function(req, res) {
+exports.find_all_drivers = function(req, res) {
   try{
+    var dname,long,lat,flag=0;
+    var arr=[];
+    const driverName = JSON.stringify(req.body.driverName);
+    const Flongitude = JSON.stringify(req.body.longitude);
+    const Flatitude = JSON.stringify(req.body.latitude);
+    console.log("Flongitude: "+Flongitude);
+    console.log("Flatitude: "+Flatitude);
+  var db_config = {
+    host     : process.env.MYSQL_HOST,
+    user     : process.env.MYSQL_USER,
+    password : process.env.MYSQL_PASSWORD,
+    database : process.env.MYSQL_DATABASE
+};
+  
+  var connection;
+  connection = mysql.createConnection(db_config); 
+  function handleDisconnect() {
+      console.log('1. connecting to db:');
+     
+     
+  
+      connection.connect(function(err) {              
+          if (err) {                                    
+              console.log('2. error when connecting to db:', err);
+           // throw err;
+
+              setTimeout(handleDisconnect, 5000); 
+          }
+          else{
+
+
+
+            var min = 100000000;
+            var radius=10;
+            var sql = "select * from driver_gps"
+            connection.query(sql, function (err, result) 
+             {
+                    if (err) 
+                         throw err;
+                     if(result.length){
+                    
+                   return res.status(200).json(result);
+                 
+                  }
+               
+               
+             });
+          }
+
+      });                                   
+
+      connection.on('error', function(err) {
+          console.log('3. db error', err);
+          if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+            flag=1;
+           
+              handleDisconnect();                      	
+          } else {                                      	
+              throw err;                                  
+          }
+      });
+  }
+  
+  handleDisconnect();
+    }
+  catch(e){
+    return res.status(500).json({success:0,msg:e.message});
+  }
+};
+
+
+exports.find_nearest_drivers = function(req, res) {
+  try{
+    var dname,long,lat,flag=0;
+var arr=[];
     const driverName = JSON.stringify(req.body.driverName);
     const Flongitude = JSON.stringify(req.body.longitude);
     const Flatitude = JSON.stringify(req.body.latitude);
