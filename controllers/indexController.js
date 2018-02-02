@@ -125,26 +125,32 @@ var arr=[];
     console.log("Flongitude: "+Flongitude);
     console.log("Flatitude: "+Flatitude);
 
-            var min = 1;
+            var min = 5;
         
             Task.find({},function (err, result) {
 
               if (err) 
                 return console.log(err);
-                if(result.length){
-                  for(var i = 0; i<result.length; i++ ){
-                    var d = findD(Flatitude,Flongitude,result[i].latitude,result[i].longitude);
-                    if(d<min)
-                    {
-                      arr.push(result[i]);
-                    }
+                if(result.length)
+                {
+                  for(var radius=1;radius<=5;radius++)
+                  {
+                        for(var i = 0; i<result.length; i++ )
+                        {
+                          var d = findD(Flatitude,Flongitude,result[i].latitude,result[i].longitude);
+                          if(d<radius)
+                          {
+                            arr.push(result[i]);
+                          }
+                        }
+                      console.log("nearest drivers "+ arr.length);
+                      if(arr.length)
+                        break;
                   }
-
-                 console.log("nearest drivers "+ arr.length);
-               if(arr.length==0)
-                   return  res.status(200).json({success:0,msg:"Service not available "});
-                 else
-                return res.status(200).json(arr);
+                    if(arr.length==0)
+                        return  res.status(200).json({success:0,msg:"Service not available "});
+                      else
+                      return res.status(200).json(arr);
                 }
               
             });
