@@ -115,7 +115,48 @@ function findD(lat1,lon1,lat2,lon2) {
 function deg2rad(deg) {
   return deg * (Math.PI/180)
 }
-exports.find_nearest_drivers = function(req, res) {
+exports.find_nearest_drivers2 = function(req, res) {
+  try{
+    var dname,long,lat;
+var arr=[];
+    const driverName = JSON.stringify(req.body.driverName);
+    const Flongitude = JSON.stringify(req.body.longitude);
+    const Flatitude = JSON.stringify(req.body.latitude);
+    console.log("Flongitude: "+Flongitude);
+    console.log("Flatitude: "+Flatitude);
+
+            var min = 2;
+        
+            Task.find({},function (err, result) {
+
+              if (err) 
+                return console.log(err);
+                if(result.length)
+                {
+               
+                        for(var i = 0; i<result.length; i++ )
+                        {
+                          var d = findD(Flatitude,Flongitude,result[i].latitude,result[i].longitude);
+                          if(d<min)
+                          {
+                            arr.push(result[i]);
+                          }
+                        }
+                      console.log("nearest drivers "+ arr.length);
+             
+                    if(arr.length==0)
+                        return  res.status(200).json({success:0,msg:"Service not available, Increase range"});
+                      else
+                      return res.status(200).json(arr);
+                }
+              
+            });
+    }
+  catch(e){
+    return res.status(500).json({success:0,msg:e.message});
+  }
+};
+exports.find_nearest_drivers5 = function(req, res) {
   try{
     var dname,long,lat;
 var arr=[];
@@ -133,22 +174,61 @@ var arr=[];
                 return console.log(err);
                 if(result.length)
                 {
-                  for(var radius=1;radius<=10;radius++)
-                  {
+                 
                         for(var i = 0; i<result.length; i++ )
                         {
                           var d = findD(Flatitude,Flongitude,result[i].latitude,result[i].longitude);
-                          if(d<radius)
+                          if(d<min)
                           {
                             arr.push(result[i]);
                           }
                         }
                       console.log("nearest drivers "+ arr.length);
-                      if(arr.length)
-                        break;
-                  }
+                   
+                  
                     if(arr.length==0)
-                        return  res.status(200).json({success:0,msg:"Service not available "});
+                        return  res.status(200).json({success:0,msg:"Service not available, Increase range"});
+                      else
+                      return res.status(200).json(arr);
+                }
+              
+            });
+    }
+  catch(e){
+    return res.status(500).json({success:0,msg:e.message});
+  }
+};
+exports.find_nearest_drivers10 = function(req, res) {
+  try{
+    var dname,long,lat;
+var arr=[];
+    const driverName = JSON.stringify(req.body.driverName);
+    const Flongitude = JSON.stringify(req.body.longitude);
+    const Flatitude = JSON.stringify(req.body.latitude);
+    console.log("Flongitude: "+Flongitude);
+    console.log("Flatitude: "+Flatitude);
+
+            var min = 10;
+        
+            Task.find({},function (err, result) {
+
+              if (err) 
+                return console.log(err);
+                if(result.length)
+                {
+             
+                        for(var i = 0; i<result.length; i++ )
+                        {
+                          var d = findD(Flatitude,Flongitude,result[i].latitude,result[i].longitude);
+                          if(d<min)
+                          {
+                            arr.push(result[i]);
+                          }
+                        }
+                      console.log("nearest drivers "+ arr.length);
+           
+                    if(arr.length==0)
+                        return  res.status(200).json({success:0,msg:"Sorry! Service not available in this area"});
                       else
                       return res.status(200).json(arr);
                 }
